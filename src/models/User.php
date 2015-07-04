@@ -63,6 +63,7 @@ class User extends ActiveRecord implements IdentityInterface
             'id' => Yii::t('user', 'ID'),
             'email' => Yii::t('user', 'Email'),
             'password' => Yii::t('user', 'Password'),
+            'confirm_password' => Yii::t('user', 'Comfirm Password'),
             'status' => Yii::t('user', 'Status'),           
             'creator' => Yii::t('user','Creator'),
             'creator_ip' => Yii::t('user', "IP's Creator IP"),
@@ -113,6 +114,24 @@ class User extends ActiveRecord implements IdentityInterface
         return true;
     }
 
+
+    /**
+     * Find user by email
+     *
+     * @param string $email email to find
+     * @return boolean|\johnitvn\advanceuser\models\User 
+     */
+    public function findUsernameByEmail($email){
+        $model = User::findOne(['email'=>$email]);
+        return $model;
+    }
+
+    public function isActived(){
+        return $this->status == self::STATUS_ACTIVED;
+    }
+
+
+
      /**
      * Validates password
      *
@@ -145,6 +164,7 @@ class User extends ActiveRecord implements IdentityInterface
     public static function findIdentity($id){
         return static::findOne($id);
     }
+
 
     /**
      * Finds an identity by the given token.

@@ -1,6 +1,7 @@
 <?php
 namespace johnitvn\advanceuser;
 
+use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
 
@@ -17,7 +18,7 @@ class Bootstrap implements BootstrapInterface
      * @param Application $app the application currently running
      */
     public function bootstrap($app){
-         if (!isset($app->get('i18n')->translations['user*'])) {
+        if (!isset($app->get('i18n')->translations['user*'])) {
             $app->get('i18n')->translations['user*'] = [
                 'class'    => PhpMessageSource::className(),
                 'basePath' => __DIR__ . '/messages',
