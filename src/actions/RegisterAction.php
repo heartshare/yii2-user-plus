@@ -21,8 +21,10 @@ class RegisterAction extends Action{
  
 		
 	/**
-    * @var string view will be render when to register
-    */
+     * @var string the view file to be rendered. If not set, it will take the value of [[id]].
+     * That means, if you name the action as "error" in "SiteController", then the view name
+     * would be "error", and the corresponding view file would be "views/site/error.php".
+     */
 	public $view;
 
 	/**

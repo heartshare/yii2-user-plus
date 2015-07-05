@@ -29,12 +29,13 @@ Yii2-advance-user don't force you use module's controller. I just define the act
             ],
              'login' => [
                 'class' => 'johnitvn/advanceuser/LoginAction',
-                'view'  => '@app/views/site/login',
             ],
             'register' => [
                 'class' => 'johnitvn/advanceuser/RegisterAction',
-                'view'  => '@app/views/site/register',
             ],
         ];
     }
 ````
+
+### 5. Add views
+Default action will take the view of controller with id. Example you add LoginAction in SiteController it will take views/site/login.php. 

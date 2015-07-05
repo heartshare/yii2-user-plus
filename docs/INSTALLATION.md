@@ -22,7 +22,7 @@ Add following lines to your main configuration file:
 'components' => [
     'user' => [
         'identityClass' => 'johnitvn\advanceuser\models\User',
-   ],  
+    ],  
 ],
 'modules' => [
     'user' => [
