@@ -17,13 +17,24 @@ class SecurityTestController extends Controller
 	public function actions(){
 		return [
 			'register'=>[
-				'class'=>'johnitvn\advanceuser\actions\RegisterAction',
-				'successUrl'=>'vkl',
+				'class'=>'johnitvn\advanceuser\actions\RegisterAction',			
 				'view'=>'@vendor/johnitvn/yii2-advance-user/src/views/security-test/register',
+				'successCallback'=>function($model){
+					$this->goHome();
+				},
 			],
 			'login'=>[
 				'class'=>'johnitvn\advanceuser\actions\LoginAction',
 				'view'=>'@vendor/johnitvn/yii2-advance-user/src/views/security-test/login',
+				'successCallback'=>function($model){
+					$this->goBack();
+				},
+			],
+			'logout'=>[
+				'class'=>'johnitvn\advanceuser\actions\LogoutAction',
+				'successCallback'=>function($model){
+					$this->goHome();
+				},
 			]
 		];
 	}

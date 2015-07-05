@@ -7,39 +7,53 @@ use johnitvn\advanceuser\models\LoginForm;
 use yii\web\MethodNotAllowedHttpException; 
 use johnitvn\advanceuser\traits\AjaxValidationTrait;
 
+/**
+* @author John Martin <john.itvn@gmail.com>
+*/
 class LoginAction extends Action{
 
     use AjaxValidationTrait;
 
-	/**
-    * @var string url will be redirect to when register success
-    */
-	public $successUrl;
+  /**
+  * @var string callback will be call when login success
+  */
+  public $successCallback;
+
+
 		
 	/**
     * @var string view will be render when to register
     */
 	public $view;
 
-	/**
-     * Runs the action
-     *
-     * @return string result content
-     */
-    public function run(){
-    	/** @var LoginForm $model */
-        $model = Yii::createObject(LoginForm::className());
+  
 
-        $this->performAjaxValidation($model);
-
-    	if ($model->load(Yii::$app->request->post()) && $model->login()) {          
-	        return $this->controller->goBack();
-    	}else{       
-    		return $this->controller->render($this->view, [                
-	            'model'  => $model,
-	        ]);
-    	}
-    	
+  public function init(){
+    if($this->successCallback==null){
+        $this->successCallback = function($action){
+          return $action->controller->goBack();
+        };
     }
+  }
+
+	 /**
+   * Runs the action
+   *
+   * @return string result content
+   */
+  public function run(){
+  	/** @var LoginForm $model */
+    $model = Yii::createObject(LoginForm::className());
+
+    $this->performAjaxValidation($model);
+
+  	if ($model->load(Yii::$app->request->post()) && $model->login()) {          
+          return call_user_func($this->successCallback,$this,$model);
+  	}else{       
+  		return $this->controller->render($this->view, [                
+            'model'  => $model,
+        ]);
+  	}    	
+  }
 
 }

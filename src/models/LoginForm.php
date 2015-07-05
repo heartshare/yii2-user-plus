@@ -10,7 +10,7 @@ use johnitvn\advanceuser\models\User;
  * LoginForm get user's login and password, validates them and logs the user in. If user has been blocked, it adds
  * an error to login form.
  *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author John Martin <john.itvn@gmail.com>
  */
 class LoginForm extends Model
 {
@@ -19,6 +19,9 @@ class LoginForm extends Model
 
     /** @var string User's plain password */
     public $password;
+
+    /** @var string Whether to remember the user */
+    public $rememberMe = false;
 
     /** @var \johnitvn\advanceuser\models\User */
     protected $user;
@@ -30,6 +33,7 @@ class LoginForm extends Model
         return [
             'email'            => Yii::t('user', 'Email'),
             'password'         => Yii::t('user', 'Password'),
+            'rememberMe'       => Yii::t('user', 'Remember me next time'),
         ];
     }
 
@@ -73,9 +77,11 @@ class LoginForm extends Model
                         $this->addError($attribute, Yii::t('user', 'Your account has been blocked'));
                     }                    
                 }
-            ]           
+            ],
+            'rememberMe' => ['rememberMe', 'boolean'],          
         ];
     }
+    
     /**
      * Validates form and logs the user in.
      *
@@ -84,7 +90,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            return Yii::$app->getUser()->login($this->user,0);
+            return Yii::$app->getUser()->login($this->user,$this->rememberMe?Yii::$app->getModule('user')->rememberFor:0);
         } else {
             return false;
         }

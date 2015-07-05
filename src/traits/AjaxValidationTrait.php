@@ -5,7 +5,7 @@ use yii\base\Model;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
 /**
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author John Martin <john.itvn@gmail.com>
  */
 trait AjaxValidationTrait
 {

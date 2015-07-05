@@ -9,6 +9,7 @@ use johnitvn\advanceuser\models\User;
 
 /**
  * UserSearch represents the model behind the search form about `johnitvn\advanceuser\models\User`.
+ * @author John Martin <dmeroff@gmail.com>
  */
 class UserSearch extends User
 {

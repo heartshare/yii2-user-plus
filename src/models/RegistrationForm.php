@@ -8,7 +8,7 @@ use johnitvn\advanceuser\models\User;
 /**
  * Registration form collects user input on registration process, validates it and creates new User model.
  *
- * @author Dmitry Erofeev <dmeroff@gmail.com>
+ * @author John Martin <john.itvn@gmail.com>
  */
 class RegistrationForm extends Model
 {

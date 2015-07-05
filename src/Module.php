@@ -8,9 +8,11 @@ class Module extends BaseModule
 {
     public $controllerNamespace = 'johnitvn\advanceuser\controllers';
 
-    public function init()
-    {
-        parent::init();
-    }
+    /**
+    * Time to rember user session
+    * Note: require [[User::enableAutoLogin]] is enabled
+    */
+    public $rememberFor = 3600*24*2;
 
+  
 }

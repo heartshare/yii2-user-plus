@@ -13,6 +13,7 @@ class m150703_191015_init extends BaseMigration {
             'id' 				   => Schema::TYPE_PK,           
             'email'                => Schema::TYPE_STRING . '(255) NOT NULL',
             'password_hash'	       => Schema::TYPE_STRING . '(255) NOT NULL',  
+            'auth_key'             => Schema::TYPE_STRING . '(255) NOT NULL',  
             'status'               => Schema::TYPE_INTEGER,      
             'creator'              => Schema::TYPE_INTEGER,
             'creator_ip'           => Schema::TYPE_STRING . '(40)',
