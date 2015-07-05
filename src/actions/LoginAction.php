@@ -19,12 +19,16 @@ class LoginAction extends Action{
 	*/
 	public $successCallback;
 
-
 		
 	/**
     * @var string view will be render when to register
     */
 	public $view;
+
+	/**
+	* @var johnitvn\advanceuser\models\LoginForm form model for validate
+	*/
+	public $form = 'johnitvn\advanceuser\models\LoginForm';
 
   
 	/** @inheritdoc */	
@@ -45,7 +49,7 @@ class LoginAction extends Action{
 	public function run(){
 		
 		/** @var LoginForm $model */
-		$model = Yii::createObject(LoginForm::className());
+		$model = Yii::createObject($this->form);
 
 		$this->performAjaxValidation($model);
 

@@ -34,8 +34,6 @@ class Bootstrap implements BootstrapInterface
             } else {
                 $module->controllerNamespace = 'johnitvn\advanceuser\controllers';
             }
-
-
         }
     }
 }
