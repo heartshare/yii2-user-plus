@@ -15,9 +15,10 @@ class LogoutAction extends Action{
     */
     public $successCallback;
 
-
+	/** @inheritdoc */	
     public function init(){
         if($this->successCallback==null){
+			// Set default success callback
             $this->successCallback = function($action){
                 return $this->controller->goHome();
             };

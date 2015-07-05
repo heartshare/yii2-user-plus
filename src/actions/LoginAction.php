@@ -12,12 +12,12 @@ use johnitvn\advanceuser\traits\AjaxValidationTrait;
 */
 class LoginAction extends Action{
 
-    use AjaxValidationTrait;
+	use AjaxValidationTrait;
 
-  /**
-  * @var string callback will be call when login success
-  */
-  public $successCallback;
+	/**
+	* @var string callback will be call when login success
+	*/
+	public $successCallback;
 
 
 		
@@ -27,33 +27,35 @@ class LoginAction extends Action{
 	public $view;
 
   
+	/** @inheritdoc */	
+	public function init(){
+		if($this->successCallback==null){
+			// Set default success callback
+			$this->successCallback = function($action){
+				return $action->controller->goBack();
+			};
+		}	
+	}
 
-  public function init(){
-    if($this->successCallback==null){
-        $this->successCallback = function($action){
-          return $action->controller->goBack();
-        };
-    }
-  }
+	/**
+    * Runs the action
+    *
+    * @return string result content
+    */
+	public function run(){
+		
+		/** @var LoginForm $model */
+		$model = Yii::createObject(LoginForm::className());
 
-	 /**
-   * Runs the action
-   *
-   * @return string result content
-   */
-  public function run(){
-  	/** @var LoginForm $model */
-    $model = Yii::createObject(LoginForm::className());
+		$this->performAjaxValidation($model);
 
-    $this->performAjaxValidation($model);
-
-  	if ($model->load(Yii::$app->request->post()) && $model->login()) {          
-          return call_user_func($this->successCallback,$this,$model);
-  	}else{       
-  		return $this->controller->render($this->view, [                
-            'model'  => $model,
-        ]);
-  	}    	
-  }
+		if ($model->load(Yii::$app->request->post()) && $model->login()) {          
+			return call_user_func($this->successCallback,$this,$model);
+		}else{       
+			return $this->controller->render($this->view, [                
+				'model'  => $model,
+			]);
+		}    	
+	}
 
 }

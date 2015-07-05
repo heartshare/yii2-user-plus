@@ -14,7 +14,7 @@ use johnitvn\advanceuser\models\User;
  */
 class LoginForm extends Model
 {
-    /** @var string User's email or username */
+    /** @var string User's email */
     public $email;
 
     /** @var string User's plain password */
