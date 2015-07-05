@@ -8,7 +8,7 @@ If you finding something like this extension. I think you same as me before deve
 
 #Documentation
 
-1. Installation and configtion
-[Installation instructions](https://github.com/johnitvn/yii2-advance-user/blob/master/docs/INSTALLATION.md)
+[1. Installation instructions](https://github.com/johnitvn/yii2-advance-user/blob/master/docs/INSTALLATION.md)
+[1. Configuration instructions](https://github.com/johnitvn/yii2-advance-user/blob/master/docs/CONFIGURATION.md)
 
 

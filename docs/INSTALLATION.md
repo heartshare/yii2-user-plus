@@ -39,5 +39,13 @@ Run the following command:
 
 ```bash
 $ php yii migrate/up --migrationPath=@vendor/johnitvn/yii2-advance-user/src/migrations
+
 ```
+
+# Where do we go?
+Continue Read [Understanding about actions](https://github.com/johnitvn/yii2-advance-user/blob/master/docs/ACTIONS.md) for know how to implements extension
+
+
+
+
 
