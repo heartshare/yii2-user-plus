@@ -32,10 +32,18 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_BLOCKED = 0;
     /* This user is register by user not created by admintrator */
     const CREATOR_BY_REGISTER = -1;
+    /* This user is create by command */
+    const CREATOR_BY_COMMAND = -1;
+    /* This user is super user */
+    const SUPER_USER_PERMISSTION = 1;
+    /* This user is not super user*/
+    const NOT_SUPER_USER_PERMISSTION = 0;
 
 
     public $password;
+
     public $confirm_password;
+
 
     /**
      * @inheritdoc
@@ -69,7 +77,8 @@ class User extends ActiveRecord implements IdentityInterface
             'email' => Yii::t('user', 'Email'),
             'password' => Yii::t('user', 'Password'),
             'confirm_password' => Yii::t('user', 'Comfirm Password'),
-            'status' => Yii::t('user', 'Status'),           
+            'status' => Yii::t('user', 'Status'), 
+            'superuser'=>  Yii::t('user', 'Supper User'),           
             'creator' => Yii::t('user','Creator'),
             'creator_ip' => Yii::t('user', "IP's Creator IP"),
             'confirmed_at' => Yii::t('user', 'Confirmed At'),
@@ -83,6 +92,7 @@ class User extends ActiveRecord implements IdentityInterface
     */
     public function register(){
         $this->creator = self::CREATOR_BY_REGISTER; 
+        $this->superuser = NOT_SUPER_USER_PERMISSTION;
         return $this->save();
     }
 
@@ -90,7 +100,18 @@ class User extends ActiveRecord implements IdentityInterface
     * Create user from admin manager 
     */
     public function create(){
+        // @task Change to user id
+        $this->superuser = NOT_SUPER_USER_PERMISSTION;
         $this->creator = self::CREATOR_BY_REGISTER; 
+        return $this->save();
+    }
+
+    /**
+    * Create user from admin manager 
+    */
+    public function createSuperUser(){
+        $this->creator = self::CREATOR_BY_COMMAND; 
+        $this->superuser = self::SUPER_USER_PERMISSTION;
         return $this->save();
     }
 
@@ -102,8 +123,9 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeSave($insert){
         if($insert){
             $this->status = self::STATUS_ACTIVED;
-
-            if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            if($this->creator == self::CREATOR_BY_COMMAND){
+                $this->creator_ip = 'localhost';                
+            }else if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
                 $this->creator_ip = $_SERVER['HTTP_CLIENT_IP'];
             } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
                 $this->creator_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -131,11 +153,23 @@ class User extends ActiveRecord implements IdentityInterface
         return $model;
     }
 
+    /**
+     * Check user is actived status
+     *
+     * @return boolean whether user is actived
+     */
     public function isActived(){
         return $this->status == self::STATUS_ACTIVED;
     }
 
-
+    /**
+     * Check superuser permistion of user
+     *
+     * @return boolean whether user is super user
+     */
+    public function isSuperuser(){
+        return $this->superuser = self::SUPER_USER_PERMISSTION;
+    }
 
     /**
      * Finds an identity by the given ID.
@@ -222,6 +256,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function validateAuthKey($authKey){
         return $this->getAuthKey() === $authKey;
     }
+
 
 
 

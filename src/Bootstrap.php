@@ -4,6 +4,8 @@ namespace johnitvn\advanceuser;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
+use yii\console\Application as ConsoleApplication;
+use johnitvn\advanceuser\Module;
 
 /**
 * @author John Martin <john.itvn@gmail.com>
@@ -18,12 +20,22 @@ class Bootstrap implements BootstrapInterface
      * @param Application $app the application currently running
      */
     public function bootstrap($app){
-        if (!isset($app->get('i18n')->translations['user*'])) {
-            $app->get('i18n')->translations['user*'] = [
-                'class'    => PhpMessageSource::className(),
-                'basePath' => __DIR__ . '/messages',
-            ];
+
+        /** @var Module $module */
+        if($app->hasModule('user') && ($module = $app->getModule('user')) instanceof Module){ 
+            if (!isset($app->get('i18n')->translations['user*'])) {
+                $app->get('i18n')->translations['user*'] = [
+                    'class'    => PhpMessageSource::className(),
+                    'basePath' => __DIR__ . '/messages',
+                ];
+            }
+            if ($app instanceof ConsoleApplication) {
+                $module->controllerNamespace = 'johnitvn\advanceuser\commands';
+            } else {
+                $module->controllerNamespace = 'johnitvn\advanceuser\controllers';
+            }
+
+
         }
-        \Yii::$app->language = 'vi';
     }
 }

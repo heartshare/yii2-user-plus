@@ -6,8 +6,6 @@ use \yii\base\Module as BaseModule;
 
 class Module extends BaseModule
 {
-    public $controllerNamespace = 'johnitvn\advanceuser\controllers';
-
     /**
     * Time to rember user session
     * Note: require [[User::enableAutoLogin]] is enabled
