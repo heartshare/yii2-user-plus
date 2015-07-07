@@ -21,12 +21,12 @@ Add following lines to your main configuration file:
 ```php
 'components' => [
     'user' => [
-        'identityClass' => 'johnitvn\advanceuser\models\User',
+        'identityClass' => 'johnitvn\userplus\models\User',
     ],  
 ],
 'modules' => [
     'user' => [
-        'class' => 'johnitvn\advanceuser\Module',
+        'class' => 'johnitvn\userplus\Module',
     ],
 ],
 ```
