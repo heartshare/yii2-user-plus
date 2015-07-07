@@ -95,13 +95,13 @@ Now let's add action into controller. Let override <b>actions()</b> in your cont
     public function actions(){
         return [               
             'logout' => [
-                'class' => 'johnitvn/userplus/actions/LogoutAction',                                
+                'class' => 'johnitvn\userplus\actions\LogoutAction',                                
             ],
             'login' => [
-                'class' => 'johnitvn/userplus/actions/LoginAction',
+                'class' => 'johnitvn\userplus\actions\LoginAction',
             ],
             'register' => [
-                'class' => 'johnitvn/userplus/actions/RegisterAction',
+                'class' => 'johnitvn\userplus\actions\RegisterAction',
             ],
         ];
     }
