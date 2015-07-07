@@ -20,6 +20,7 @@ Add following lines to your main configuration file:
 
 ```php
 'components' => [
+    'gridview'=> 'kartik\grid\Module',
     'user' => [
         'identityClass' => 'johnitvn\userplus\models\User',
     ],  
