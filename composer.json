@@ -15,7 +15,9 @@
 		"yiisoft/yii2-swiftmailer": "~2.0",
         "yiisoft/yii2-authclient": "~2.0",
 		"yiisoft/yii2-bootstrap": "~2.0",
+		"yii\jui\DatePicker":"*",
 		"johnitvn/yii2-ajaxcrud-assets":"1.*"
+		
 	},
 	"autoload": {
         "psr-4": {
