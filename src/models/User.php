@@ -1,6 +1,6 @@
 <?php
 
-namespace johnitvn\advanceuser\models;
+namespace johnitvn\userplus\models;
 
 use Yii;
 use yii\db\ActiveRecord;
@@ -146,7 +146,7 @@ class User extends ActiveRecord implements IdentityInterface
      * Find user by email
      *
      * @param string $email email to find
-     * @return boolean|\johnitvn\advanceuser\models\User 
+     * @return boolean|\johnitvn\userplus\models\User 
      */
     public function findUsernameByEmail($email){
         $model = User::findOne(['email'=>$email]);

@@ -1,5 +1,5 @@
 <?php
-namespace johnitvn\advanceuser\traits;
+namespace johnitvn\userplus\traits;
 use Yii;
 use yii\base\Model;
 use yii\web\Response;

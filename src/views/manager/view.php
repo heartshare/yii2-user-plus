@@ -1,10 +1,10 @@
 <?php
 
 use yii\widgets\DetailView;
-use johnitvn\advanceuser\models\User;
+use johnitvn\userplus\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model johnitvn\advanceuser\models\User */
+/* @var $model johnitvn\userplus\models\User */
 ?>
 <div class="user-view">
  

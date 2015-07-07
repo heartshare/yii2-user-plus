@@ -1,10 +1,10 @@
 <?php
 
-namespace johnitvn\advanceuser\models;
+namespace johnitvn\userplus\models;
 
 use Yii;
 use yii\base\Model;
-use johnitvn\advanceuser\models\User;
+use johnitvn\userplus\models\User;
 
 /**
  * LoginForm get user's login and password, validates them and logs the user in. If user has been blocked, it adds
@@ -23,7 +23,7 @@ class LoginForm extends Model
     /** @var string Whether to remember the user */
     public $rememberMe = false;
 
-    /** @var \johnitvn\advanceuser\models\User */
+    /** @var \johnitvn\userplus\models\User */
     protected $user;
 
        

@@ -1,5 +1,5 @@
 <?php
-namespace johnitvn\advanceuser;
+namespace johnitvn\userplus;
 
 use Yii;
 use \yii\base\Module as BaseModule;

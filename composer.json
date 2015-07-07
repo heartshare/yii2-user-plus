@@ -1,5 +1,5 @@
 {
-    "name": "johnitvn/yii2-advance-user",
+    "name": "johnitvn/yii2-user-plus",
     "type": "yii2-extension",
     "license": "Apache-2.0",
     "authors": [
@@ -19,10 +19,10 @@
 	},
 	"autoload": {
         "psr-4": {
-            "johnitvn\\advanceuser\\": "src/"
+            "johnitvn\\userplus\\": "src/"
         }
     },
     "extra": {
-        "bootstrap": "johnitvn\\advanceuser\\Bootstrap"       
+        "bootstrap": "johnitvn\\userplus\\Bootstrap"       
     }
 }

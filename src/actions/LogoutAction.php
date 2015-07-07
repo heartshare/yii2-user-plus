@@ -1,5 +1,5 @@
 <?php
-namespace johnitvn\advanceuser\actions;
+namespace johnitvn\userplus\actions;
 
 use Yii;
 use yii\base\Action; 

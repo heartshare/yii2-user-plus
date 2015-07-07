@@ -1,11 +1,11 @@
 <?php
 
-namespace johnitvn\advanceuser\commands;
+namespace johnitvn\userplus\commands;
 
 use Yii;
 use yii\helpers\Console;
 use yii\console\Controller;
-use johnitvn\advanceuser\models\User;
+use johnitvn\userplus\models\User;
 
 
 /**

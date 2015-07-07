@@ -1,11 +1,11 @@
 <?php
-namespace johnitvn\advanceuser\actions;
+namespace johnitvn\userplus\actions;
 
 use Yii;
 use yii\base\Action; 
-use johnitvn\advanceuser\models\LoginForm;
+use johnitvn\userplus\models\LoginForm;
 use yii\web\MethodNotAllowedHttpException; 
-use johnitvn\advanceuser\traits\AjaxValidationTrait;
+use johnitvn\userplus\traits\AjaxValidationTrait;
 
 /**
 * @author John Martin <john.itvn@gmail.com>
@@ -28,9 +28,9 @@ class LoginAction extends Action{
 	public $view;
 
 	/**
-	* @var johnitvn\advanceuser\models\LoginForm form model for validate
+	* @var johnitvn\userplus\models\LoginForm form model for validate
 	*/
-	public $form = 'johnitvn\advanceuser\models\LoginForm';
+	public $form = 'johnitvn\userplus\models\LoginForm';
 
   
 	/** @inheritdoc */	

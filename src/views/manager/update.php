@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model johnitvn\advanceuser\models\User */
+/* @var $model johnitvn\userplus\models\User */
 ?>
 <div class="user-update">
 

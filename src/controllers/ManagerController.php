@@ -1,10 +1,10 @@
 <?php
 
-namespace johnitvn\advanceuser\controllers;
+namespace johnitvn\userplus\controllers;
 
 use Yii;
-use johnitvn\advanceuser\models\User;
-use johnitvn\advanceuser\models\UserSearch;
+use johnitvn\userplus\models\User;
+use johnitvn\userplus\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

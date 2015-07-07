@@ -1,9 +1,9 @@
 <?php
-namespace johnitvn\advanceuser\models;
+namespace johnitvn\userplus\models;
 
 use Yii;
 use yii\base\Model;
-use johnitvn\advanceuser\models\User;
+use johnitvn\userplus\models\User;
 
 /**
  * Registration form collects user input on registration process, validates it and creates new User model.
@@ -41,7 +41,7 @@ class RegistrationForm extends Model
             'emailUnique'   => [
                 'email',
                 'unique',
-                'targetClass' => 'johnitvn\advanceuser\models\User',
+                'targetClass' => 'johnitvn\userplus\models\User',
                 'message' => Yii::t('user', 'This email address has already been taken')
             ],
             // password rules

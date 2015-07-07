@@ -2,7 +2,7 @@
 
 use yii\db\Schema;
 use yii\db\Migration;
-use johnitvn\advanceuser\migrations\BaseMigration;
+use johnitvn\userplus\migrations\BaseMigration;
 
 class m150703_191015_init extends BaseMigration {
 

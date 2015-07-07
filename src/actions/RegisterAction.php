@@ -1,11 +1,11 @@
 <?php
-namespace johnitvn\advanceuser\actions;
+namespace johnitvn\userplus\actions;
 
 use Yii;
 use yii\base\Action; 
 use yii\base\InvalidConfigException;
-use johnitvn\advanceuser\models\RegistrationForm;
-use johnitvn\advanceuser\traits\AjaxValidationTrait;
+use johnitvn\userplus\models\RegistrationForm;
+use johnitvn\userplus\traits\AjaxValidationTrait;
 
 /**
 * @author John Martin <john.itvn@gmail.com>
@@ -28,9 +28,9 @@ class RegisterAction extends Action{
 	public $view;
 
 	/**
-	* @var johnitvn\advanceuser\models\RegistrationForm form model for validate
+	* @var johnitvn\userplus\models\RegistrationForm form model for validate
 	*/
-	public $form = 'johnitvn\advanceuser\models\RegistrationForm';
+	public $form = 'johnitvn\userplus\models\RegistrationForm';
 
 	/** @inheritdoc */	
 	public function init(){
@@ -53,7 +53,7 @@ class RegisterAction extends Action{
 
 		// Ensure form model is instance of Registration Form for Security
 		if(!($model instanceof RegistrationForm)){
-			throw new InvalidConfigException("RegisterAction::$form must instanceof johnitvn\advanceuser\models\RegistrationForm\n
+			throw new InvalidConfigException("RegisterAction::$form must instanceof johnitvn\userplus\models\RegistrationForm\n
 											  Leave empty this config if you don't want to customize register field");
 		}
 

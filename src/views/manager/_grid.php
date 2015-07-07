@@ -3,12 +3,12 @@ use yii\helpers\Url;
 use yii\widgets\Pjax;
 use johnitvn\ajaxcrud\GridView;
 use yii\helpers\Html;
-use johnitvn\advanceuser\controllers\ManagerController; 
+use johnitvn\userplus\controllers\ManagerController; 
 use yii\jui\DatePicker;
-use johnitvn\advanceuser\models\User;
+use johnitvn\userplus\models\User;
 
 /* @var $this yii\web\View */
-/* @var $searchModel johnitvn\advanceuser\models\UserSearch */
+/* @var $searchModel johnitvn\userplus\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 

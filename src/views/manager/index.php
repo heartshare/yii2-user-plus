@@ -5,7 +5,7 @@ use johnitvn\ajaxcrudassets\CrudAsset;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
-/* @var $searchModel johnitvn\advanceuser\models\UserSearch */
+/* @var $searchModel johnitvn\userplus\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Users';

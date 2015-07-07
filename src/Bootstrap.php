@@ -1,11 +1,11 @@
 <?php
-namespace johnitvn\advanceuser;
+namespace johnitvn\userplus;
 
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\i18n\PhpMessageSource;
 use yii\console\Application as ConsoleApplication;
-use johnitvn\advanceuser\Module;
+use johnitvn\userplus\Module;
 
 /**
 * @author John Martin <john.itvn@gmail.com>
@@ -30,9 +30,9 @@ class Bootstrap implements BootstrapInterface
                 ];
             }
             if ($app instanceof ConsoleApplication) {
-                $module->controllerNamespace = 'johnitvn\advanceuser\commands';
+                $module->controllerNamespace = 'johnitvn\userplus\commands';
             } else {
-                $module->controllerNamespace = 'johnitvn\advanceuser\controllers';
+                $module->controllerNamespace = 'johnitvn\userplus\controllers';
             }
         }
     }
