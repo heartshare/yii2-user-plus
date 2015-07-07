@@ -19,14 +19,14 @@ If you finding something like this extension. I think you same as me before deve
 - Login, logout, register feature
 - Design for integrate
 
-#Development Roadmap
-###Version 1.0.2
+#Development Roadmap 
+###Version 1.0.2 (Scheduled release at July 18, 2015)
 - Role Base Access Controll with configuration
 - Role Base Access Controll with Database
 - User Register with Social Account
 - Enable config login field(Can choose email or username for login)
 
-###Version 1.0.1
+###Version 1.0.1 (Scheduled release at July 12, 2015)
 - User register acvation by email
 - User reset password by email
 - Enable filter for backend/frontend
