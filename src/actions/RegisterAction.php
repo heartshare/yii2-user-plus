@@ -62,7 +62,7 @@ class RegisterAction extends Action{
 		if ($model->load(Yii::$app->request->post()) && $model->register()) {          
 			return call_user_func($this->successCallback,$this,$model);
 		}else{       
-			return $this->controller->render($this->view, [                
+			return $this->controller->render($this->view==null?$this->id:$this->view, [                
 				'model'  => $model,
 			]);
 		}

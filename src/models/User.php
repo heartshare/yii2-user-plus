@@ -92,7 +92,7 @@ class User extends ActiveRecord implements IdentityInterface
     */
     public function register(){
         $this->creator = self::CREATOR_BY_REGISTER; 
-        $this->superuser = NOT_SUPER_USER_PERMISSTION;
+        $this->superuser = self::NOT_SUPER_USER_PERMISSTION;
         return $this->save();
     }
 
@@ -101,17 +101,28 @@ class User extends ActiveRecord implements IdentityInterface
     */
     public function create(){
         // @task Change to user id
-        $this->superuser = NOT_SUPER_USER_PERMISSTION;
+        $this->superuser = self::NOT_SUPER_USER_PERMISSTION;
         $this->creator = self::CREATOR_BY_REGISTER; 
         return $this->save();
     }
 
     /**
-    * Create user from admin manager 
+    * Create super user from comand line
     */
-    public function createSuperUser(){
+    public function cliCreateSuperUser(){
         $this->creator = self::CREATOR_BY_COMMAND; 
         $this->superuser = self::SUPER_USER_PERMISSTION;
+        return $this->save();
+    }
+
+
+    /**
+    * Create user from comand line
+    */
+    public function cliCreate(){
+        // @task Change to user id
+        $this->superuser = self::NOT_SUPER_USER_PERMISSTION;
+        $this->creator = self::CREATOR_BY_COMMAND; 
         return $this->save();
     }
 

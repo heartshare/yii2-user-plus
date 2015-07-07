@@ -1,4 +1,4 @@
-# Config the module
+# Guilde for configuation
 
 ###1. Remember me function
 If you want to enable remeber me funtion. Let add below line to you config

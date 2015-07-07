@@ -1,5 +1,7 @@
 # Getting started with Yii2-user-plus
 
+If you are using advanced template please view [Advance Template Configure](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/ADVANCED_TEMPLTE.md)
+
 ### 1. Download
 
 This extension can be installed using composer. Run following command to download and install :
@@ -16,7 +18,9 @@ or add to the require section of your composer.json file.
 
 ### 2. Configure
 
-Add following lines to your main configuration file:
+
+#####2.1 Config for <b>basic app template</b>
+Add following lines to your web configuration file:
 
 ```php
 'components' => [
@@ -31,6 +35,39 @@ Add following lines to your main configuration file:
     ],
 ],
 ```
+Add following lines to your console configuration file:
+'modules' => [
+    'user' => [
+        'class' => 'johnitvn\userplus\Module',
+    ],
+],
+
+#####2.1 Config for <b>advanced app template</b>
+
+Add following lines into 'common/config/main.php':
+
+```php
+'components' => [
+    'gridview'=> 'kartik\grid\Module',
+    'user' => [
+        'identityClass' => 'johnitvn\userplus\models\User',
+    ],  
+],
+'modules' => [
+    'user' => [
+        'class' => 'johnitvn\userplus\Module',
+    ],
+],
+```
+Add following lines into console/config/main.php:
+'modules' => [
+    'user' => [
+        'class' => 'johnitvn\userplus\Module',
+    ],
+],
+
+Remove `user` component in backend\config\main.php and frontend\config\main.php
+
 
 ### 3. Update database schema
 
@@ -55,16 +92,16 @@ We not create controller for flexible in extensible. Don't force you use module'
 Now let's add action into controller. Let override <b>actions()</b> in your controller.
 
 ````php
-	public function actions(){
+    public function actions(){
         return [               
             'logout' => [
-                'class' => 'johnitvn/userplus/LogoutAction',                                
+                'class' => 'johnitvn/userplus/actions/LogoutAction',                                
             ],
             'login' => [
-                'class' => 'johnitvn/userplus/LoginAction',
+                'class' => 'johnitvn/userplus/actions/LoginAction',
             ],
             'register' => [
-                'class' => 'johnitvn/userplus/RegisterAction',
+                'class' => 'johnitvn/userplus/actions/RegisterAction',
             ],
         ];
     }
@@ -124,3 +161,14 @@ The example of register view:
 ````
 
 > The important thing is: make sure we have the email, password fields in login views form and email, password, confirm_password fields in register form
+
+
+###5. Create first super user
+Run this command with email and password of super user
+
+````php
+yii user/create-su <email> <password>
+
+````
+
+Done! You can try to login, now
