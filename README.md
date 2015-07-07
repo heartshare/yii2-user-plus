@@ -8,10 +8,10 @@ If you finding something like this extension. I think you same as me before deve
 
 #Documentation
 
-[1. Installation instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/INSTALLATION.md)<BR>
+[1. Installation instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/INSTALLATION.md)
+<BR>
 [2. Configuration instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/CONFIGURATION.md)
 <BR>
-
-#Cutomize Document
+3. [Customization instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/CUSTOMIZATION.md)
 
 
