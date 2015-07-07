@@ -18,6 +18,8 @@ class m150703_191015_init extends BaseMigration {
             'superuser'            => Schema::TYPE_INTEGER,      
             'creator'              => Schema::TYPE_INTEGER,
             'creator_ip'           => Schema::TYPE_STRING . '(40)',
+            'confirm_token'        => Schema::TYPE_STRING,
+            'resetpaswd_token'     => Schema::TYPE_STRING,
             'confirmed_at'         => Schema::TYPE_INTEGER,
             'created_at'           => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at'           => Schema::TYPE_INTEGER . ' NOT NULL',
