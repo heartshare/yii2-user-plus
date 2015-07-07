@@ -6,7 +6,7 @@ If you finding something like this extension. I think you same as me before deve
 + Easy for start implement
 + Powerful for customize
 
-#Documentation
+##Documentation
 
 [1. Installation instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/INSTALLATION.md)
 <BR>
@@ -14,19 +14,19 @@ If you finding something like this extension. I think you same as me before deve
 <BR>
 [3. Customization instructions](https://github.com/johnitvn/yii2-user-plus/blob/master/docs/CUSTOMIZATION.md)
 
-#Version History
-###Version 1.0.0
+##Version History
+####Version 1.0.0
 - Login, logout, register feature
 - Design for integrate
 
-#Development Roadmap 
-###Version 1.0.2 (Scheduled release at July 18, 2015)
+##Development Roadmap 
+####Version 1.0.2 (Scheduled release at July 18, 2015)
 - Role Base Access Controll with configuration
 - Role Base Access Controll with Database
 - User Register with Social Account
 - Enable config login field(Can choose email or username for login)
 
-###Version 1.0.1 (Scheduled release at July 12, 2015)
+####Version 1.0.1 (Scheduled release at July 12, 2015)
 - User register acvation by email
 - User reset password by email
 - Enable filter for backend/frontend
