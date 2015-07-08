@@ -20,7 +20,7 @@ class UserSearch extends User
     {
         return [
             [['id','creator', 'creator_ip', 'confirmed_at', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['email', 'password'], 'safe'],
+            [['login', 'password'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class UserSearch extends User
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'email', $this->email]);
+        $query->andFilterWhere(['like', 'login', $this->login]);
 
         return $dataProvider;
     }

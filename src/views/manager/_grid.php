@@ -52,7 +52,7 @@ $gridColumns = [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'email',
+        'attribute'=>'login',
     ],  
     [
         'class'=>'\kartik\grid\DataColumn',
@@ -62,9 +62,9 @@ $gridColumns = [
                 return 'Register';
             }else{                
                 $creator =  User::findOne(1);
-                return Html::a($creator->email,
+                return Html::a($creator->login,
                              ['view','id'=>$creator->id],
-                             ['data-modal-title'=>'Admin '.$creator->email,'class'=>'view-action-button']);
+                             ['data-modal-title'=>'Admin '.$creator->login,'class'=>'view-action-button']);
             }
         },
         'format' => 'html',
@@ -123,7 +123,7 @@ $gridColumns = [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'superuser',
          'value' => function ($model) {
-                if ($model->superuser==User::NOT_SUPER_USER_PERMISSTION) {
+                if ($model->superuser==User::IS_NOT_SUPER_USER) {
                     return Html::a(Yii::t('user', 'Superuser'), ['superuser', 'id' => $model->id], [
                         'class' => 'btn btn-toggle btn-xs btn-success btn-block',
                         'data-method' => 'post',

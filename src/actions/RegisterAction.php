@@ -6,13 +6,14 @@ use yii\base\Action;
 use yii\base\InvalidConfigException;
 use johnitvn\userplus\models\RegistrationForm;
 use johnitvn\userplus\traits\AjaxValidationTrait;
+use johnitvn\userplus\base\BaseRegistrationForm;
 
 /**
 * @author John Martin <john.itvn@gmail.com>
 */
 class RegisterAction extends Action{
 
-  use AjaxValidationTrait;
+  	use AjaxValidationTrait;
 
 	/**
 	* @var string callback will be call when login success
@@ -40,6 +41,10 @@ class RegisterAction extends Action{
 				return $this->controller->goHome();
 			};
 		}
+		$this->form = Yii::createObject($this->form); 
+		if(!($this->form instanceof BaseRegistrationForm)){
+			throw new InvalidConfigException('LoginAction::$form must be instanceof johnitvn\userplus\base\BaseLoginForm');
+		}
 	}
 
 	/**
@@ -49,7 +54,7 @@ class RegisterAction extends Action{
 	*/
 	public function run(){
 		// Create form model
-		$model = Yii::createObject($this->form);
+		$model = $this->form;
 
 		// Ensure form model is instance of Registration Form for Security
 		if(!($model instanceof RegistrationForm)){

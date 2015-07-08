@@ -6,6 +6,8 @@ use yii\base\Action;
 use johnitvn\userplus\models\LoginForm;
 use yii\web\MethodNotAllowedHttpException; 
 use johnitvn\userplus\traits\AjaxValidationTrait;
+use johnitvn\userplus\base\BaseLoginForm;
+use yii\base\InvalidConfigException; 
 
 /**
 * @author John Martin <john.itvn@gmail.com>
@@ -41,6 +43,10 @@ class LoginAction extends Action{
 				return $action->controller->goBack();
 			};
 		}	
+		$this->form = Yii::createObject($this->form); 
+		if(!($this->form instanceof BaseLoginForm)){
+			throw new InvalidConfigException('LoginAction::$form must be instanceof johnitvn\userplus\base\BaseLoginForm');
+		}
 	}
 
 	/**
@@ -48,10 +54,10 @@ class LoginAction extends Action{
     *
     * @return string result content
     */
-	public function run(){
+	public function run(){	
 		
 		/** @var LoginForm $model */
-		$model = Yii::createObject($this->form);
+		$model = $this->form;
 
 		$this->performAjaxValidation($model);
 

@@ -11,7 +11,7 @@ class m150703_191015_init extends BaseMigration {
     {
     	$this->createTable('user_accounts', [
             'id' 				   => Schema::TYPE_PK,           
-            'email'                => Schema::TYPE_STRING . '(255) NOT NULL',
+            'login'                => Schema::TYPE_STRING . '(255) NOT NULL',
             'password_hash'	       => Schema::TYPE_STRING . '(255) NOT NULL',  
             'auth_key'             => Schema::TYPE_STRING . '(255) NOT NULL',  
             'status'               => Schema::TYPE_INTEGER,     
@@ -24,7 +24,7 @@ class m150703_191015_init extends BaseMigration {
             'created_at'           => Schema::TYPE_INTEGER . ' NOT NULL',
             'updated_at'           => Schema::TYPE_INTEGER . ' NOT NULL',
         ], $this->tableOptions);
-        $this->createIndex('user_unique_email', 'user_accounts', 'email', true);
+        $this->createIndex('user_unique_login', 'user_accounts', 'login', true);
     }   
 
     public function down()

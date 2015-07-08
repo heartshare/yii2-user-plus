@@ -10,6 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\grid\GridView;
 use \yii\web\Response;
+use yii\web\ForbiddenHttpException;
+use yii\web\UnauthorizedHttpException;
+
 
 /**
  * ManagerController implements the CRUD actions for User model.
@@ -30,6 +33,19 @@ class ManagerController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function beforeAction($action){
+        if(!parent::beforeAction($action)){
+            return false;
+        }else{
+            if(Yii::$app->user->isGuest){
+                throw new UnauthorizedHttpException('You are not loged in!');
+            }else if(!Yii::$app->user->identity->isSuperuser()){
+                throw new ForbiddenHttpException('Only superuser have permistion to access!');
+            }
+            return true;
+        }
     }
 
     /**
