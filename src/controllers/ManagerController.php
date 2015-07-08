@@ -208,6 +208,32 @@ class ManagerController extends Controller
         }
     }
 
+
+    public function actionBlock($id){
+        $model = $this->findModel($id);
+         $model->toggleBlock();
+        var_dump($model->getErrors());
+        if($model!=null && $model->toggleBlock()){
+            if ($model->status==User::STATUS_BLOCKED) {
+                echo Html::a(Yii::t('user', 'Unblock'), ['block', 'id' => $model->id], [
+                    'class' => 'btn btn-toggle btn-xs btn-success btn-block',
+                    'data-method' => 'post',
+                    'data-confirm-message' => Yii::t('user', 'Are you sure you want to unblock this user?'),
+                ]);
+            } else {
+                echo Html::a(Yii::t('user', 'Block'), ['block', 'id' => $model->id], [
+                    'class' => 'btn btn-toggle btn-xs btn-danger btn-block',
+                    'data-method' => 'post',
+                    'data-confirm-message' => Yii::t('user', 'Are you sure you want to block this user?'),
+                ]);
+            }
+            return;
+        }else{
+            Yii::$app->response->setStatusCode(400,"Can't block this user");
+            return;
+        }
+    }
+
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
