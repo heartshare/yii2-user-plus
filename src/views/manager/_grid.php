@@ -53,26 +53,7 @@ $gridColumns = [
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'login',
-    ],  
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'creator',
-        'value'=>function($model){
-            if($model->creator==User::CREATOR_BY_REGISTER){
-                return 'Register';
-            }else{                
-                $creator =  User::findOne(1);
-                return Html::a($creator->login,
-                             ['view','id'=>$creator->id],
-                             ['data-modal-title'=>'Admin '.$creator->login,'class'=>'view-action-button']);
-            }
-        },
-        'format' => 'html',
-    ],  
-    [
-        'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'creator_ip',
-    ],      
+    ],        
     [
         'class'=>'\kartik\grid\DataColumn',
         'attribute'=>'created_at',
@@ -87,30 +68,20 @@ $gridColumns = [
                 'class' => 'form-control',
             ],
         ]),
-    ],       
+    ],          
     [
         'class'=>'\kartik\grid\DataColumn',
-        'attribute'=>'updated_at',
-        'value'=>function($model){
-            if($model->updated_at==null){
-                return 'Never';
-            }else{
-                return date('d/m/Y', $model->updated_at);
-            }
-        }
-    ],     
-    [
-        'class'=>'\kartik\grid\DataColumn',
+        'width' => '50px',
         'attribute'=>'status',
          'value' => function ($model) {
                 if ($model->status==User::STATUS_BLOCKED) {
-                    return Html::a(Yii::t('user', 'Unblock'), ['toogle-block', 'id' => $model->id], [
+                    return Html::a(Yii::t('user', 'Unblock'), ['toggle-block', 'id' => $model->id], [
                         'class' => 'btn btn-toggle btn-xs btn-success btn-block',
                         'data-method' => 'post',
                         'data-confirm-message' => Yii::t('user', 'Are you sure you want to unblock this user?'),
                     ]);
                 } else {
-                    return Html::a(Yii::t('user', 'Block'), ['toogle-block', 'id' => $model->id], [
+                    return Html::a(Yii::t('user', 'Block'), ['toggle-block', 'id' => $model->id], [
                         'class' => 'btn btn-toggle btn-xs btn-danger btn-block',
                         'data-method' => 'post',
                         'data-confirm-message' => Yii::t('user', 'Are you sure you want to block this user?'),
@@ -121,16 +92,17 @@ $gridColumns = [
     ],
     [
         'class'=>'\kartik\grid\DataColumn',
+        'width' => '100px',
         'attribute'=>'superuser',
          'value' => function ($model) {
                 if ($model->superuser==User::IS_NOT_SUPER_USER) {
-                    return Html::a(Yii::t('user', 'Superuser'), ['superuser', 'id' => $model->id], [
+                    return Html::a(Yii::t('user', 'Set SU'), ['toggle-superuser', 'id' => $model->id], [
                         'class' => 'btn btn-toggle btn-xs btn-success btn-block',
                         'data-method' => 'post',
                         'data-confirm-message' => Yii::t('user', 'Are you sure you want to set superuser permistion to this user?'),
                     ]);
                 } else {
-                    return Html::a(Yii::t('user', 'Not Superuser'), ['block', 'id' => $model->id], [
+                    return Html::a(Yii::t('user', 'Remove SU'), ['toggle-superuser', 'id' => $model->id], [
                         'class' => 'btn btn-xs btn-danger btn-block',
                         'data-method' => 'post',
                         'data-confirm-message' => Yii::t('user', 'Are you sure you want to disable superuser permistion of this user?'),

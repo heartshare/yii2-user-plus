@@ -12,6 +12,7 @@ use yii\grid\GridView;
 use \yii\web\Response;
 use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
+use yii\helpers\Html;
 
 
 /**
@@ -97,7 +98,11 @@ class ManagerController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new User();  
+        $currentUserId = Yii::$app->user->identity->getId(); 
+        $model = Yii::createObject([
+            'class'    => User::className(),           
+            'scenario' => 'create',
+        ]);
 
         if($request->isAjax){
             /*
@@ -112,14 +117,14 @@ class ManagerController extends Controller
                         'model' => $model,
                     ]),
                 ];         
-            }else if($model->load($request->post()) && $model->create()){
+            }else if($model->load($request->post()) && $model->create($currentUserId)){
                 return [
                     'code'=>'200',
                     'message'=>'Create User success',
                 ];
-            }else{
-                print_r($model->getErrors());
-                die();
+            }else{        
+                var_export($model);
+                die();        
                 return [
                     'code'=>'400',
                     'message'=>'Validate error',
@@ -154,6 +159,7 @@ class ManagerController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
+        $model->scenario = 'update';
 
         if($request->isAjax){
             /*
@@ -171,7 +177,7 @@ class ManagerController extends Controller
             }else if($model->load($request->post()) && $model->save()){
                 return [
                     'code'=>'200',
-                    'message'=>'Create User success',
+                    'message'=>'Update User success',
                 ];
             }else{
                 return [
@@ -225,10 +231,11 @@ class ManagerController extends Controller
     }
 
 
-    public function actionBlock($id){
+    public function actionToggleBlock($id){
+
         $model = $this->findModel($id);
-         $model->toggleBlock();
-        var_dump($model->getErrors());
+        $model->scenario = 'toggle-block';
+
         if($model!=null && $model->toggleBlock()){
             if ($model->status==User::STATUS_BLOCKED) {
                 echo Html::a(Yii::t('user', 'Unblock'), ['block', 'id' => $model->id], [
@@ -249,6 +256,35 @@ class ManagerController extends Controller
             return;
         }
     }
+
+
+
+    public function actionToggleSuperuser($id){
+        $model = $this->findModel($id);
+        $model->scenario = 'toggle-superuser';
+
+        if($model!=null && $model->toggleSuperuser()){
+            if ($model->superuser==User::IS_NOT_SUPER_USER) {
+                return Html::a(Yii::t('user', 'Set SU'), ['toggle-superuser', 'id' => $model->id], [
+                    'class' => 'btn btn-toggle btn-xs btn-success btn-block',
+                    'data-method' => 'post',
+                    'data-confirm-message' => Yii::t('user', 'Are you sure you want to set superuser permistion to this user?'),
+                ]);
+            } else {
+                return Html::a(Yii::t('user', 'Remove SU'), ['toggle-superuser', 'id' => $model->id], [
+                    'class' => 'btn btn-xs btn-danger btn-block',
+                    'data-method' => 'post',
+                    'data-confirm-message' => Yii::t('user', 'Are you sure you want to disable superuser permistion of this user?'),
+                ]);
+            }
+            return;
+        }else{
+            Yii::$app->response->setStatusCode(400,"Can't block this user");
+            return;
+        }
+    }
+
+
 
     /**
      * Finds the User model based on its primary key value.

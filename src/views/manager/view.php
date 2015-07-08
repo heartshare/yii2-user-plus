@@ -12,15 +12,20 @@ use johnitvn\userplus\models\User;
         'model' => $model,
         'attributes' => [
             'id',
-            'email',
+            'login',
             [
                 'label'  => User::attributeLabels()['creator'],
-                'value'  => $model->creator==User::CREATOR_BY_REGISTER?'Register':User::findOne(1)->email,                  
+                'value'  => User::CREATOR_BY_REGISTER?'Register':$model->creator==User::CREATOR_BY_CONSOLE?'CONSOLE':User::findOne($model->creator)->login                   
             ],
             'creator_ip',
             [
                 'label'  => User::attributeLabels()['status'],
                 'value'  => '<span class="btn btn-xs btn-'.($model->status==User::STATUS_ACTIVED?'success">Actived':'danger">Blocked').'</span>',
+                'format' => ['html'],
+            ],
+            [
+                'label'  => User::attributeLabels()['superuser'],
+                'value'  => '<span class="btn btn-xs btn-'.($model->status==User::IS_SUPER_USER?'success">Is Superuser':'danger">Is not Superuser').'</span>',
                 'format' => ['html'],
             ],
             [

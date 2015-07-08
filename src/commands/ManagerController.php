@@ -25,6 +25,7 @@ class ManagerController extends Controller
             'class'    => User::className(),
             'login'    => $login,
             'password' => $password,
+            'scenario' => 'console-create',
         ]);
        
         if ($user->consoleCreate()) {

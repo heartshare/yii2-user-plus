@@ -86,7 +86,10 @@ class BaseRegistrationForm extends Model
         }
 
         /** @var User $user */
-        $user = Yii::createObject(User::className());
+        $user = Yii::createObject([
+            'class'    => User::className(),           
+            'scenario' => 'register',
+        ]);
         $this->loadAttributes($user);
 
         if (!$user->register()) {            
@@ -107,9 +110,7 @@ class BaseRegistrationForm extends Model
      */
     protected function loadAttributes(User $user)
     {
-        $user->login = $this->login;
-        $user->password = $this->password;
-        $user->confirm_password = $this->confirm_password;
+        $user->setAttributes($this->attributes);
     }
 
 }

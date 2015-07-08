@@ -7,6 +7,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\ArrayHelper;
+use yii\base\Event;
 
 /**
  * This is the model class for table "user_accounts".
@@ -78,6 +79,9 @@ class BaseUser extends ActiveRecord implements IdentityInterface
             'create'=>['login','password','confirm_password'],
             'register'=>['login','password','confirm_password'],
             'console-create'=>['login','password'],
+            'toggle-block'=>['status'],
+            'toggle-superuser'=>['superuser'],
+            'update'=>['login','password','confirm_password'],
         ];
     }
 
@@ -103,7 +107,6 @@ class BaseUser extends ActiveRecord implements IdentityInterface
 
 
     public function consoleCreate(){
-        $this->scenario = 'console-create';          
         $this->trigger(self::BEFORE_CONSOLE_CREATE);      
         if(!$this->save()){
             return false;
@@ -116,8 +119,8 @@ class BaseUser extends ActiveRecord implements IdentityInterface
     /**
     * Create user from admin manager 
     */
-    public function create($creatorUserId){   
-        $this->scenario = 'create';     
+    public function create($creatorUserId){ 
+        $this->creator = $creatorUserId; 
         $this->trigger(self::BEFORE_CREATE);                
         if(!$this->save()){
             return false;
@@ -127,7 +130,6 @@ class BaseUser extends ActiveRecord implements IdentityInterface
     }
 
     public function register(){     
-        $this->scenario = 'register';
         $this->trigger(self::BEFORE_REGISTER);                
         if(!$this->save()){
             return false;
@@ -155,6 +157,16 @@ class BaseUser extends ActiveRecord implements IdentityInterface
             $this->setPassword($this->password); 
         }
         return true;
+    }
+
+    public function toggleBlock(){
+        $this->status = $this->status==self::STATUS_ACTIVED?self::STATUS_BLOCKED:self::STATUS_ACTIVED;
+        return $this->Save();
+    }
+
+     public function toggleSuperuser(){
+        $this->superuser = $this->superuser==self::IS_SUPER_USER?self::IS_NOT_SUPER_USER:self::IS_SUPER_USER;
+        return $this->Save();
     }
 
 

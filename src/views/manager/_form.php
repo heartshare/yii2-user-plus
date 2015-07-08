@@ -11,10 +11,10 @@ use yii\widgets\ActiveForm;
 
 
     <?php $form = ActiveForm::begin(); ?>
-<?php if($model->email==null){ ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+<?php if($model->isNewRecord){ ?>
+    <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
 <?php }else{ ?>
-	<?= $form->field($model, 'email')->textInput(['maxlength' => true,'disabled'=> true]) ?>
+	<?= $form->field($model, 'login')->textInput(['maxlength' => true,'disabled'=> true]) ?>
 <?php } ?>
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>

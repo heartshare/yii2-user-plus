@@ -29,11 +29,17 @@ class User extends BaseUser{
         $labels = parent::attributeLabels();
         $labels['login'] =  Yii::t('user', 'Email');
         return $labels;
+    }
+
+    public function beforeConsoleCreate(){
+        $this->superuser = self::IS_SUPER_USER;
+        $this->creator = self::CREATOR_BY_CONSOLE; 
+        $this->creator_ip = Yii::t('user','Local');
+        $this->confirmed_at = time();  
     }    
 
-	public function beforeCreate(){		
-        $this->superuser = self::IS_NOT_SUPER_USER;
-        $this->creator = $creatorUserId; 
+	public function beforeCreate(){		      
+        $this->superuser = self::IS_NOT_SUPER_USER;      
         $this->confirmed_at = time();  
         $this->prepareCreatorIp();
 	}
@@ -44,8 +50,6 @@ class User extends BaseUser{
         $this->prepareCreatorIp();
 	}
 
-
-
 	private function prepareCreatorIp(){
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $this->creator_ip = $_SERVER['HTTP_CLIENT_IP'];
@@ -55,6 +59,5 @@ class User extends BaseUser{
             $this->creator_ip = $_SERVER['REMOTE_ADDR'];
         } 
     }
-
 
 }
