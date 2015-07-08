@@ -106,6 +106,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->save();
     }
 
+    public function toggleBlock(){
+        $this->status = $this->status==self::STATUS_ACTIVED?self::STATUS_BLOCKED:self::STATUS_ACTIVED;
+        return $this->save();
+    }
+
     /**
     * Create super user from comand line
     */
