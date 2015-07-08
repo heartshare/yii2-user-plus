@@ -34,8 +34,8 @@ class User extends BaseUser{
 	public function beforeCreate(){		
         $this->superuser = self::IS_NOT_SUPER_USER;
         $this->creator = $creatorUserId; 
-        $this->prepareCreatorIp();
         $this->confirmed_at = time();  
+        $this->prepareCreatorIp();
 	}
 
 	public function beforeRegister(){
@@ -45,18 +45,12 @@ class User extends BaseUser{
 	}
 
 
-	public function beforeConsoleCreate(){
-		$this->superuser = self::IS_SUPER_USER;
-        $this->creator = self::CREATOR_BY_CONSOLE;
-        $this->creator_ip = 'Local';
-        $this->confirmed_at = time();       
-	}
 
 	private function prepareCreatorIp(){
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
             $this->creator_ip = $_SERVER['HTTP_CLIENT_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $this->creator_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            $this->creator_ip = $_SERVER['HTTP_X_FORWARDED_FOR']; 
         } else {
             $this->creator_ip = $_SERVER['REMOTE_ADDR'];
         } 
