@@ -45,6 +45,7 @@ class RegisterAction extends Action{
 		if(!($this->form instanceof BaseRegistrationForm)){
 			throw new InvalidConfigException('LoginAction::$form must be instanceof johnitvn\userplus\base\BaseLoginForm');
 		}
+
 	}
 
 	/**
@@ -55,12 +56,6 @@ class RegisterAction extends Action{
 	public function run(){
 		// Create form model
 		$model = $this->form;
-
-		// Ensure form model is instance of Registration Form for Security
-		if(!($model instanceof RegistrationForm)){
-			throw new InvalidConfigException("RegisterAction::$form must instanceof johnitvn\userplus\models\RegistrationForm\n
-											  Leave empty this config if you don't want to customize register field");
-		}
 
 		$this->performAjaxValidation($model);     
 
