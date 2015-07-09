@@ -1,43 +1,8 @@
 <?php
 use yii\helpers\Url;
-use yii\widgets\Pjax;
-use johnitvn\ajaxcrud\GridView;
-use yii\helpers\Html;
-use johnitvn\userplus\controllers\ManagerController; 
-use yii\jui\DatePicker;
-use johnitvn\userplus\models\User;
 
-/* @var $this yii\web\View */
-/* @var $searchModel johnitvn\userplus\models\UserSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-
-
-?>
-
-
-<?php
-
-/**
-* Grid toolbar config
-*/
-$createActionButton = Html::a('<i class="glyphicon glyphicon-plus"></i>',['create'],['data-modal-title'=>'Create new User','class'=>'create-action-button btn btn-default']);
-$refreshActionButton = Html::a('<i class="glyphicon glyphicon-repeat"></i>',['index'],['data-pjax'=>1,'class'=>'btn btn-default']);
-$fullScreenActionButton = Html::a('<i class="glyphicon glyphicon-resize-full"></i>','#',['class'=>'btn-toggle-fullscreen btn btn-default']);
-$bulkDeleteButton = Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All Selected',
-                                 ["bulk-delete"] ,
-                                 [
-                                     "class"=>"btn-bulk-delete btn btn-danger",
-                                     "data-method"=>"post",
-                                     "title"=>"Delete All Selected",
-                                     "data-confirm-message"=>"Are you sure to delete all this items?"
-                                 ]);
-
-
-/**
-* Grid column config
-*/
-$gridColumns = [
-    [
+return [
+      [
         'class' => 'kartik\grid\CheckboxColumn',
         'width' => '20px',
     ],
@@ -118,36 +83,14 @@ $gridColumns = [
         'urlCreator' => function($action, $model, $key, $index) { 
                 return Url::to([$action,'id'=>$key]);
         },
-        'viewOptions'=>['class'=>'view-action-button','title'=>'View', 'data-toggle'=>'tooltip','data-modal-title'=>'View User'],
-        'updateOptions'=>['class'=>'update-action-button','title'=>'Update', 'data-toggle'=>'tooltip','data-modal-title'=>'Update User'],
-        'deleteOptions'=>['class'=>'delete-action-button','title'=>'Delete', 'data-toggle'=>'tooltip','data-confirm-message'=>'Are you sure to delete this item?'], 
+        'viewOptions'=>['role'=>'modal-remote','title'=>'View','data-toggle'=>'tooltip'],
+        'updateOptions'=>['role'=>'modal-remote','title'=>'Update', 'data-toggle'=>'tooltip'],
+        'deleteOptions'=>['role'=>'modal-remote','title'=>'Delete', 
+                          'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                          'data-request-method'=>'post',
+                          'data-toggle'=>'tooltip',
+                          'data-confirm-title'=>'Are you sure?',
+                          'data-confirm-message'=>'Are you sure want to delete this item'], 
     ],
 
 ];   
-
-echo GridView::widget([
-    'id'=>'crud-datatable',
-    'dataProvider' => $dataProvider,
-    'filterModel' => $searchModel,
-    'columns' => $gridColumns,
-    'toolbar' =>  [['content'=> $createActionButton.$refreshActionButton.$fullScreenActionButton.'{toogleDataNoContainer}'],'{export}'],
-    'bordered' => true,
-    'striped' => true,
-    'condensed' => true,
-    'responsive' =>true,
-    'responsiveWrap' => false,
-    'hover' => false,
-    'showPageSummary' => false,        
-    'panel' => [
-        'type' => 'primary', 
-        'heading' => '<i class="glyphicon glyphicon-list"></i>  User listing',
-        'before' => '<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
-        'after' =>  '<div class="pull-left"></div><div class="pull-right">'.$bulkDeleteButton.'</div><div class="clearfix"></div>',
-        ],    
-
-]);
-
-?>
-
-   
-  
