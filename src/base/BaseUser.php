@@ -80,8 +80,10 @@ class BaseUser extends ActiveRecord implements IdentityInterface
             'register'=>['login','password','confirm_password'],
             'console-create'=>['login','password'],
             'toggle-block'=>['status'],
+            'block'=>['status'],
+            'unblock'=>['status'],
             'toggle-superuser'=>['superuser'],
-            'update'=>['login','password','confirm_password'],
+            'change_password'=>['password','confirm_password'],
         ];
     }
 
@@ -136,6 +138,16 @@ class BaseUser extends ActiveRecord implements IdentityInterface
         }
         $this->trigger(self::AFTER_REGISTER);   
         return true;
+    }
+
+    public function block(){
+        $this->status = self::STATUS_BLOCKED;
+        return $this->save();
+    }
+
+    public function unblock(){
+        $this->status = self::STATUS_ACTIVED;
+        return $this->save();
     }
 
 

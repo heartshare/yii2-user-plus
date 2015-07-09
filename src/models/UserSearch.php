@@ -19,7 +19,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id','creator', 'creator_ip', 'confirmed_at', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id','creator', 'creator_ip', 'confirmed_at', 'status','superuser' ,'created_at', 'updated_at'], 'integer'],
             [['login', 'password'], 'safe'],
         ];
     }
@@ -42,6 +42,10 @@ class UserSearch extends User
      */
     public function search($params)
     {
+
+        // echo '<PRE>';
+        // var_dump($params);
+        // die();
         $query = User::find();
 
         $dataProvider = new ActiveDataProvider([
@@ -50,9 +54,7 @@ class UserSearch extends User
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+        if (!$this->validate()) {         
             return $dataProvider;
         }
 
@@ -61,6 +63,7 @@ class UserSearch extends User
             'creator'=> $this->creator,
             'creator_ip' => $this->creator_ip,
             'confirmed_at' => $this->confirmed_at,
+            'superuser'=> $this->superuser,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

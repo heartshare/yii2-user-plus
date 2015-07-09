@@ -42,17 +42,37 @@ CrudAsset::register($this);
                 'heading' => '<i class="glyphicon glyphicon-list"></i> Users listing',
                 'before'=>'<em>* Resize table columns just like a spreadsheet by dragging the column edges.</em>',
                 'after'=>BulkButtonWidget::widget([
-                            'buttons'=>Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
-                                ["bulk-delete"] ,
-                                [
-                                    "class"=>"btn btn-danger btn-xs",
-                                    'role'=>'modal-remote-bulk',
-                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
-                                    'data-request-method'=>'post',
-                                    'data-confirm-title'=>'Are you sure?',
-                                    'data-confirm-message'=>'Are you sure want to delete this item'
-                                ]),
-                        ]).                        
+                            'buttons'=> Html::a('<i class="glyphicon glyphicon-trash"></i>&nbsp; Delete All',
+                                                ["bulk-delete"] ,
+                                                [
+                                                    "class"=>"btn btn-default btn-xs",
+                                                    'role'=>'modal-remote-bulk',
+                                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                                    'data-request-method'=>'post',
+                                                    'data-confirm-title'=>'Are you sure?',
+                                                    'data-confirm-message'=>'Are you sure want to delete all this items'
+                                                ]).' '.
+                                        Html::a('<i class="glyphicon glyphicon-ban-circle"></i>&nbsp; Block All',
+                                                ["bulk-block"] ,
+                                                [
+                                                    "class"=>"btn btn-default btn-xs",
+                                                    'role'=>'modal-remote-bulk',
+                                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                                    'data-request-method'=>'post',
+                                                    'data-confirm-title'=>'Are you sure?',
+                                                    'data-confirm-message'=>'Are you sure want to block all this items'
+                                                ]).' '.
+                                        Html::a('<i class="glyphicon glyphicon-ok-circle"></i>&nbsp; Unblock All',
+                                                ["bulk-unblock"] ,
+                                                [
+                                                    "class"=>"btn btn-default btn-xs",
+                                                    'role'=>'modal-remote-bulk',
+                                                    'data-confirm'=>false, 'data-method'=>false,// for overide yii data api
+                                                    'data-request-method'=>'post',
+                                                    'data-confirm-title'=>'Are you sure?',
+                                                    'data-confirm-message'=>'Are you sure want to unblock all this items'
+                                                ]),
+                        ]).  
                         '<div class="clearfix"></div>',
             ]
         ])?>
