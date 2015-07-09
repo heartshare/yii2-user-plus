@@ -92,10 +92,10 @@ Done! You can try to login, now
 
 # Avaiable route
 
-<b>user/manager</b>: For manager user, only superuser have permistion to access this route
-<b>user/security/login</b>: For login
-<b>user/security/logout</b>: For logout
-<b>user/security/register</b>: For user register. Default this action is off. You must enable enableRegister in module for turn on route
+<b>user/manager</b>: For manager user, only superuser have permistion to access this route<BR>
+<b>user/security/login</b>: For login<BR>
+<b>user/security/logout</b>: For logout<BR>
+<b>user/security/register</b>: For user register. Default this action is off. You must enable enableRegister in module for turn on route<BR>
 
 # Where do we go?
 
