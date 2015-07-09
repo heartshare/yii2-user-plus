@@ -28,6 +28,8 @@ class ManagerController extends Controller
                 'actions' => [
                     'delete' => ['post'],
                     'bulk-delete' => ['post'],
+                    'toggle-block' => ['post'],
+                    'toggle-superuser' => ['post'],
                 ],
             ],
         ];
@@ -60,7 +62,6 @@ class ManagerController extends Controller
         if($request->isAjax){
             Yii::$app->response->format = Response::FORMAT_JSON;
             return [
-                    'error'=>false,
                     'title'=> "User #".$id,
                     'content'=>$this->renderPartial('view', [
                         'model' => $this->findModel($id),
@@ -84,7 +85,10 @@ class ManagerController extends Controller
     public function actionCreate()
     {
         $request = Yii::$app->request;
-        $model = new User();  
+        $model = Yii::createObject([
+            'class'    => User::className(),           
+            'scenario' => 'create',
+        ]);
 
         if($request->isAjax){
             /*
@@ -93,7 +97,6 @@ class ManagerController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'error'=>false,
                     'title'=> "Create new User",
                     'content'=>$this->renderPartial('create', [
                         'model' => $model,
@@ -104,7 +107,7 @@ class ManagerController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'error'=>false,
+                    'forceReload'=>'true',
                     'title'=> "Create new User",
                     'content'=>'<span class="text-success">Create User success</span>',
                     'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
@@ -113,7 +116,6 @@ class ManagerController extends Controller
                 ];         
             }else{           
                 return [
-                    'error'=>false,
                     'title'=> "Create new User",
                     'content'=>$this->renderPartial('create', [
                         'model' => $model,
@@ -149,6 +151,7 @@ class ManagerController extends Controller
     {
         $request = Yii::$app->request;
         $model = $this->findModel($id);       
+        $model->scenario = 'change_password';
 
         if($request->isAjax){
             /*
@@ -157,7 +160,6 @@ class ManagerController extends Controller
             Yii::$app->response->format = Response::FORMAT_JSON;
             if($request->isGet){
                 return [
-                    'error'=>false,
                     'title'=> "Update User #".$id,
                     'content'=>$this->renderPartial('update', [
                         'model' => $this->findModel($id),
@@ -167,7 +169,7 @@ class ManagerController extends Controller
                 ];         
             }else if($model->load($request->post()) && $model->save()){
                 return [
-                    'error'=>false,
+                    'forceReload'=>'true',
                     'title'=> "User #".$id,
                     'content'=>$this->renderPartial('view', [
                         'model' => $this->findModel($id),
@@ -176,13 +178,14 @@ class ManagerController extends Controller
                             Html::a('Edit',['update','id'=>$id],['class'=>'btn btn-primary','role'=>'modal-remote'])
                 ];    
             }else{
-                return [
-                    'code'=>'400',
-                    'message'=>'Validate error',
-                    'data'=>$this->renderPartial('update', [
-                        'model' => $model,
+                 return [
+                    'title'=> "Update User #".$id,
+                    'content'=>$this->renderPartial('update', [
+                        'model' => $this->findModel($id),
                     ]),
-                ];         
+                    'footer'=> Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"]).
+                                Html::button('Save',['class'=>'btn btn-primary','type'=>"submit"])
+                ];        
             }
         }else{
             /*
@@ -207,9 +210,94 @@ class ManagerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $request = Yii::$app->request;
+        // echo Yii::$app->user->getId();
+        // die();
+        if(Yii::$app->user->getId()==$id){
+            if($request->isAjax){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return [
+                            'title'=>'An error occurred',
+                            'content'=>'<span class="text-danger">You can not delete yourself</span>',
+                            'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+                       ];   
+            }else{            
+                return $this->redirect(['index']);
+            }
+        }
+
+        //$this->findModel($id)->delete();
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>true];    
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+
+
+    }
+
+    public function actionToggleBlock($id){
+        $model = $this->findModel($id);
+        $model->scenario = 'toggle-block';
+
         Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['forceClose'=>true,'forceReload'=>true];         
+
+        if(Yii::$app->user->getId()==$id){
+            return [
+                        'title'=>'An error occurred',
+                        'content'=>'<span class="text-danger">You can not block yourself</span>',
+                        'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+                   ];   
+          
+        }
+
+
+        if($model!=null && $model->toggleBlock()){
+            return ['forceClose'=>true,'forceReload'=>true]; 
+        }else{
+             return [
+                'title'=>'An error occurred',
+                'content'=>'<span class="text-danger">Can not toggle block this user. Getting unknow error</span>',
+                'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+            ];   
+            return;
+        }
+    }
+
+
+    public function actionToggleSuperuser($id){
+        $model = $this->findModel($id);
+        $model->scenario = 'toggle-superuser';
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if(Yii::$app->user->getId()==$id){
+            return [
+                        'title'=>'An error occurred',
+                        'content'=>'<span class="text-danger">You can not disable superuser of yourself</span>',
+                        'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+                   ];   
+          
+        }
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if($model!=null && $model->toggleSuperuser()){
+            return ['forceClose'=>true,'forceReload'=>true]; 
+        }else{
+            return [
+                'title'=>'An error occurred',
+                'content'=>'<span class="text-danger">Can not toggle block this user. Getting unknow error</span>',
+                'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+            ];   
+        }
     }
 
      /**
@@ -222,12 +310,106 @@ class ManagerController extends Controller
     public function actionBulkDelete()
     {        
         $request = Yii::$app->request;
-        $pks = $request->post('pks'); // Array or selected records primary keys
-        foreach (User::findAll(json_decode($pks)) as $model) {
+        $pks = json_decode($request->post('pks')); // Array or selected records primary keys
+
+
+        if(in_array(Yii::$app->user->getId(),$pks)){
+            if($request->isAjax){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return [
+                            'title'=>'An error occurred',
+                            'content'=>'<span class="text-danger">You can not delete yourself. Please get our your account in your selection</span>',
+                            'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+                       ];   
+            }else{            
+                return $this->redirect(['index']);
+            }
+        }
+
+
+        foreach (User::findAll($pks) as $model) {
             $model->delete();
         }
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['forceClose'=>true,'forceReload'=>true]; 
+        
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>true]; 
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+       
+    }
+
+
+    public function actionBulkBlock(){
+        $request = Yii::$app->request;
+        $pks = json_decode($request->post('pks')); // Array or selected records primary keys
+
+
+        if(in_array(Yii::$app->user->getId(),$pks)){
+            if($request->isAjax){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return [
+                            'title'=>'An error occurred',
+                            'content'=>'<span class="text-danger">You can not block yourself. Please get our your account in your selection</span>',
+                            'footer'=>Html::button('Close',['class'=>'btn btn-default pull-left','data-dismiss'=>"modal"])
+                       ];   
+            }else{            
+                return $this->redirect(['index']);
+            }
+        }
+
+        foreach (User::findAll($pks) as $model) {
+            $model->scenario = 'block';
+            $model->block();
+        }
+        
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>true]; 
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+
+    }
+
+    public function actionBulkUnblock(){
+        $request = Yii::$app->request;
+        $pks = json_decode($request->post('pks')); // Array or selected records primary keys
+
+        foreach (User::findAll($pks) as $model) {
+            $model->scenario = 'unblock';
+            $model->unblock();
+        }
+        
+
+        if($request->isAjax){
+            /*
+            *   Process for ajax request
+            */
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['forceClose'=>true,'forceReload'=>true]; 
+        }else{
+            /*
+            *   Process for non-ajax request
+            */
+            return $this->redirect(['index']);
+        }
+        
     }
 
     /**
