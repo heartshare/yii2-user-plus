@@ -13,7 +13,7 @@ class Module extends BaseModule
     */
     public $rememberFor = 3600*24*2;
 
-    public $enableRegister = true;
+    public $enableRegister = false;
 
     public $enableSecurityHandler = true;
 
